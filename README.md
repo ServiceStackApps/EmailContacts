@@ -96,7 +96,7 @@ For **EmailContacts.ServiceInterface** project:
     PM> Install-Package ServiceStack
     PM> Install-Package ServiceStack.OrmLite
 
-For EmailContacts.ServiceModel DTO project:
+For **EmailContacts.ServiceModel** DTO project:
 
     PM> Install-Package ServiceStack.Interfaces
 
@@ -112,7 +112,7 @@ Configure your model namespaces to be included in all Razor Pages by default by 
 </pages>
 ```
 
-For EmailContacts.Test project:
+For **EmailContacts.Test** project:
 
     PM> Install-Package NUnit
     PM> Install-Package ServiceStack.RabbitMq
