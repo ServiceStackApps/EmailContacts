@@ -789,7 +789,7 @@ public class MyService : Service { ... }
             return "&lt;li data-id='" + c.Id + "' data-click='showContact'&gt;" +
                         "&lt;span class='glyphicon glyphicon-user' style='margin: 0 5px 0 0'&gt;&lt;/span&gt;" +
                         c.Name + " " + " (" + c.Age + ")" +
-                        '&lt;span&gt;' class="glyphicon glyphicon-remove-circle" data-click="deleteContact"&gt;&lt;/span&gt;' +
+                        '&lt;span class="glyphicon glyphicon-remove-circle" data-click="deleteContact"&gt;&lt;/span&gt;' +
                     "&lt;/li&gt;";
         });
         $("#contacts").append(html.join(''));

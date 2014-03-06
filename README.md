@@ -159,7 +159,7 @@ public class Global : System.Web.HttpApplication
 
 ### Plugins
 
-<img src="http://i.imgur.com/2Hf3P9L.png" width="370" align="right" hspace="10" />
+<img src="http://i.imgur.com/2Hf3P9L.png" width="350" align="right" hspace="10" />
 
 Most of ServiceStack's high-level features are encapsulated in modular plugins that can be easily added and removed. Typically ServiceStack will register most of built-in plugins by default which can be easily, added, removed or configured. E.g. you can remove the Metadata pages with:
 
@@ -217,9 +217,9 @@ using (IDbConnection db = container.Resolve<IDbConnectionFactory>().Open())
     db.DropAndCreateTable<Email>();
     db.DropAndCreateTable<Contact>();
 
-    db.Insert(new Contact { Name = "Kurt Cobain", Email = "demo+kurt@servicestack.net", Age = 27 });
-    db.Insert(new Contact { Name = "Jimi Hendrix", Email = "demo+jimi@servicestack.net", Age = 27 });
-    db.Insert(new Contact { Name = "Michael Jackson", Email = "demo+mike@servicestack.net", Age = 50 });
+    db.Insert(new Contact { Name = "Kurt Cobain", Email = "demo+kurt@servicestack.net", Age=27 });
+    db.Insert(new Contact { Name = "Jimi Hendrix", Email = "demo+jimi@servicestack.net", Age=27 });
+    db.Insert(new Contact { Name = "Michael J.", Email = "demo+mike@servicestack.net", Age=50 });
 }
 ```
 
@@ -247,7 +247,7 @@ Instead of using complex nested XML and configuration classes for maintaining st
 
 ```xml
 <appSettings>
-  <add key="SmtpConfig" value="{Host:smtphost,Port:587,Username:ADD_USERNAME,Password:ADD_PASSWORD}" />
+  <add key="SmtpConfig" value="{Host:smtphost,Port:587,Username:ADD_USER,Password:ADD_PASS}" />
 </appSettigns>
 ```
 
@@ -486,10 +486,10 @@ refreshEmailHistory();
 function addContacts(contacts) {
     var html = contacts.map(function (c) {
         return "<li data-id='" + c.Id + "' data-click='showContact'>" +
-                    "<span class='glyphicon glyphicon-user' style='margin: 0 5px 0 0'></span>" +
-                    c.Name + " " + " (" + c.Age + ")" +
-                    '<span>' class="glyphicon glyphicon-remove-circle" data-click="deleteContact"></span>' +
-                "</li>";
+                "<span class='glyphicon glyphicon-user' style='margin: 0 5px 0 0'></span>" +
+                c.Name + " " + " (" + c.Age + ")" +
+                '<span class="glyphicon glyphicon-remove-circle" data-click="deleteContact"></span>' +
+            "</li>";
     });
     $("#contacts").append(html.join(''));
 }
@@ -562,7 +562,7 @@ ServiceStack JS Utils validation and error handling support works with Bootstrap
     <div class="row">
         <div class="col-sm-3 form-group">
             <label for="Name">Name</label>
-            <input class="form-control input-sm" type="text" id="Name" name="Name" value="" placeholder="">
+            <input class="form-control input-sm" type="text" id="Name" name="Name" value="">
             <span class="help-block"></span>
         </div>
         ...
@@ -648,10 +648,10 @@ An interesting difference in the dynamically generated HTML are the presence of 
 function addContacts(contacts) {
     var html = contacts.map(function (c) {
         return "<li data-id='" + c.Id + "' data-click='showContact'>" +
-                    "<span class='glyphicon glyphicon-user' style='margin: 0 5px 0 0'></span>" +
-                    c.Name + " " + " (" + c.Age + ")" +
-                    '<span>' class="glyphicon glyphicon-remove-circle" data-click="deleteContact"></span>' +
-                "</li>";
+                "<span class='glyphicon glyphicon-user' style='margin: 0 5px 0 0'></span>" +
+                c.Name + " " + " (" + c.Age + ")" +
+                '<span class="glyphicon glyphicon-remove-circle" data-click="deleteContact"></span>' +
+            "</li>";
     });
     $("#contacts").append(html.join(''));
 }
@@ -821,8 +821,8 @@ var mqFactory = new RabbitMqMessageFactory();
 
 using (var mqClient = mqFactory.CreateMessageQueueClient())
 {
-    mqClient.Publish(new EmailContact { ContactId = 1, Subject = "UnitTest MQ Email #1", Body = "Body 1" });
-    mqClient.Publish(new EmailContact { ContactId = 1, Subject = "UnitTest MQ Email #2", Body = "Body 2" });
+    mqClient.Publish(new EmailContact { ContactId = 1, Subject = "MQ Email #1", Body = "Body 1" });
+    mqClient.Publish(new EmailContact { ContactId = 1, Subject = "MQ Email #2", Body = "Body 2" });
 }
 ```
 
@@ -883,7 +883,9 @@ public class EmailServices : Service
         if (contact == null)
             throw HttpError.NotFound("Contact does not exist");
 
-        var msg = new Email { From = "demo@servicestack.net", To = contact.Email }.PopulateWith(request);
+        var msg = new Email { From = "demo@servicestack.net", To = contact.Email }
+            .PopulateWith(request);
+
         Emailer.Email(msg);
 
         return new EmailContactResponse { Email = contact.Email };
@@ -941,7 +943,8 @@ public class IntegrationTests
     [Test]
     public void Can_call_with_JsonServiceClient()
     {
-        client.Post(new CreateContact { Name = "Unit Test", Email = "demo+unit@servicestack.net", Age = 27 });
+        client.Post(new CreateContact { 
+            Name = "Unit Test", Email = "demo+unit@servicestack.net", Age = 27 });
 
         Contact contact = client.Get(new GetContact { Id = 1 });
 
@@ -1013,7 +1016,8 @@ public class UnitTests
                     db.DropAndCreateTable<Contact>();
                     db.DropAndCreateTable<Email>();
 
-                    db.Insert(new Contact { Name = "Test Contact", Email = "test@email.com", Age = 10 });
+                    db.Insert(new Contact { 
+                        Name = "Test Contact", Email = "test@email.com", Age = 10 });
                 }
             }
         }
