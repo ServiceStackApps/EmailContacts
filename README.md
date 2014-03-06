@@ -488,8 +488,8 @@ function addContacts(contacts) {
         return "<li data-id='" + c.Id + "' data-click='showContact'>" +
                 "<span class='glyphicon glyphicon-user' style='margin: 0 5px 0 0'></span>" +
                 c.Name + " " + " (" + c.Age + ")" +
-                '<span class="glyphicon glyphicon-remove-circle" data-click="deleteContact"></span>' +
-            "</li>";
+                '<span class="glyphicon glyphicon-remove-circle" data-click="deleteContact"></span>'
+             + "</li>";
     });
     $("#contacts").append(html.join(''));
 }
@@ -650,8 +650,8 @@ function addContacts(contacts) {
         return "<li data-id='" + c.Id + "' data-click='showContact'>" +
                 "<span class='glyphicon glyphicon-user' style='margin: 0 5px 0 0'></span>" +
                 c.Name + " " + " (" + c.Age + ")" +
-                '<span class="glyphicon glyphicon-remove-circle" data-click="deleteContact"></span>' +
-            "</li>";
+                '<span class="glyphicon glyphicon-remove-circle" data-click="deleteContact"></span>'
+             + "</li>";
     });
     $("#contacts").append(html.join(''));
 }
