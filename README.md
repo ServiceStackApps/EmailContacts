@@ -70,6 +70,7 @@ This section will take you through the steps for physically laying out setting u
 
 Adding this to the [Web.config](https://github.com/ServiceStack/EmailContacts/blob/master/src/EmailContacts/Web.config#L16-L21) tells ASP.NET to route all HTTP Requests to ServiceStack:
 
+```xml
 <system.webServer>
   <validation validateIntegratedModeConfiguration="false" />
   <handlers>
@@ -78,6 +79,7 @@ Adding this to the [Web.config](https://github.com/ServiceStack/EmailContacts/bl
           verb="*" preCondition="integratedMode" resourceType="Unspecified" allowPathInfo="true" />
   </handlers>
 </system.webServer>
+```
 
 ### Install NuGet Packages
 
