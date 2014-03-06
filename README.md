@@ -9,7 +9,9 @@ The purpose of the EmailContacts Application is to manage contacts in any RDBMS 
 
 The entire UI is maintained in a single 
 [default.cshtml](https://github.com/ServiceStack/EmailContacts/blob/master/src/EmailContacts/default.cshtml) 
-page under 130 lines of HTML and 70 lines of JavaScript to render the dynamic UI, bind server validation errors and provide real-time UX feedback. The Application also follows an API-First development style where all services are also immediately available via an end-to-end typed API to Mobile and Desktop .NET clients.
+page under 130 lines of HTML and 70 lines of JavaScript to render the dynamic UI, bind server validation errors and provide real-time UX feedback. 
+The Application also follows an API-First development style where the Ajax UI calls only published APIs allowing 
+all services to be immediately available, naturally, via an end-to-end typed API to Mobile and Desktop .NET clients.
 
 This documentation goes through setting up this solution from scratch, and explains the ServiceStack features it makes use of along the way.
 
