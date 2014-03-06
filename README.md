@@ -3,7 +3,7 @@
 
 Is a ServiceStack Single Page App built just using jQuery and Bootstrap to provide an example showing how to structure a medium-sized ServiceStack solution as well as showcasing some of ServiceStack's built-in features useful in the reducing the effort for developing medium-sized Web Applications.
 
-The purpose of the EmailContacts Application is to manage contacts in any RDBMS database, provide a form to be able to send them messages and maintain a rolling history of any emails sent. The application also provides an option to have emails instead sent and processed via Rabbit MQ.
+The purpose of the EmailContacts Application is to manage contacts in any RDBMS database, provide a form to be able to send them messages and maintain a rolling history of any emails sent. The application also provides an option to have emails instead sent and processed via [Rabbit MQ](https://github.com/ServiceStack/ServiceStack/wiki/Rabbit-MQ).
 
 ![EmailContacts Screenshot](https://raw.github.com/ServiceStack/EmailContacts/master/src/EmailContacts/Content/splash.png)
 
