@@ -1,0 +1,199 @@
+﻿@layout ""
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Email Contacts</title>
+    <script type="text/javascript" src="Scripts/jquery-2.1.0.js"></script>
+    <script type="text/javascript" src="Scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/ss-utils.js"></script>
+    <link href="Content/default.css" rel="stylesheet" />
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/bootstrap-theme.css" rel="stylesheet" />
+    <style type="text/css">
+        body {
+            margin: 20px;
+            color: #444;
+        }
+        [data-click] {
+            cursor: pointer;
+            padding: 0 10px;
+            font-size: 18px;
+        }
+        span[data-click] {
+            color: #999;
+        }
+        span[data-click]:hover {
+            color: #333;
+        }
+        #email-contact .rotate {
+            visibility: hidden;
+            font-size: 18px;
+            margin: 0 0 0 10px;
+        }
+        #email-contact .loading .rotate {
+            visibility: visible;
+        }
+    </style>
+</head>
+    <body>
+        <h1 class="glyphicon glyphicon-send" style="float:left; margin:0 10px 0 0"></h1>
+        <h1>Email Contacts</h1>
+        <div class="clearfix"></div>
+        
+        <h3 class="glyphicon glyphicon-plus" style="float:left; padding: 0 10px 0 0; line-height: 80%"></h3>
+        <h3>Add Contact</h3>
+        <div class="clearfix"></div>
+
+        <form id="form-addcontact" action="@(new CreateContact().ToPostUrl())" method="POST">
+            <div class="row">
+                <div class="col-sm-3 form-group">
+                    <label for="Name">Name</label>
+                    <input class="form-control input-sm" type="text" id="Name" name="Name" value="" placeholder="">
+                    <span class="help-block"></span>
+                </div>
+                <div class="col-sm-3 form-group">
+                    <label for="Email">Email</label>
+                    <input class="form-control input-sm" type="text" id="Email" name="Email" value="" placeholder="">
+                    <span class="help-block"></span>
+                </div>
+                <div class="col-sm-3 form-group">
+                    <label for="Age">Age</label>
+                    <input class="form-control input-sm" type="text" id="Age" name="Age" value="" placeholder="">
+                    <span class="help-block"></span>
+                </div>
+                <div class="col-sm-1 form-group">
+                    <label>&nbsp;</label><br/>
+                    <button class="btn btn-sm btn-default" type="submit">Create Contact</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </form>
+        
+        <div class="col-sm-3">
+            <h3>Contacts</h3>
+            <ul id="contacts" class="nav"></ul>
+        </div>
+
+        <div id="email-contact" class="col-sm-7" style="display: none; border-bottom: 1px solid #ccc; padding: 0 0 10px 0; margin: 0 0 10px 0;">
+            <div class='glyphicon glyphicon-envelope' style='float: left; font-size: 65px; line-height: 65px; margin: 15px 20px 0 0'></div>
+            <h3>
+                Email <span data-html="Name"></span>
+            </h3>
+            <h4>To: <span data-html="Email"></span></h4>
+            <div class="clearfix"></div>
+            <form id="form-emailcontact" method="POST"
+                action="@(new EmailContact().ToPostUrl())" 
+                data-action-alt="@(new EmailContact().ToOneWayUrl())">
+                <div class="alert alert-success" style="display:none"></div>
+                <input type="hidden" name="ContactId" data-val="Id"  />
+                <div class="form-group">
+                    <label for="Subject">Subject</label>
+                    <input class="form-control input-sm" type="text" id="Subject" name="Subject" value="" placeholder="">
+                    <span class="help-block"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Body">Body</label>
+                    <textarea class="form-control" type="text" id="Body" name="Body"></textarea>
+                    <span class="help-block"></span>
+                </div>
+                <div class="form-group">
+                    <div style="float:right">
+                        <input type="checkbox" id="chkAction" data-click="toggleAction" />
+                        <label for="chkAction">Email via MQ</label>
+                    </div>
+                    <label>&nbsp;</label><br/>
+                    <button class="btn btn-lg btn-default" type="submit">Email Contact</button>
+                    <div class='glyphicon glyphicon-repeat rotate'></div>
+                </div>
+                <div class="clearfix"></div>
+            </form>
+        </div>
+
+        <div class="col-sm-3"></div>
+        
+        <div id="email-history" class="col-sm-7" style="display:none;">
+            <h3>Email History</h3>
+            <table class="table table-striped" style="width: 100%;">
+                <thead>
+                    <th>Id</th>
+                    <th>To</th>
+                    <th>Subject</th>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </body>
+    
+    <script>
+        $("input").change($.ss.clearAdjacentError);
+        $.getJSON("/contacts", addContacts);
+        refreshEmailHistory();
+
+        function addContacts(contacts) {
+            var html = contacts.map(function (c) {
+                return "<li data-id='" + c.Id + "' data-click='showContact'>" +
+                           "<span class='glyphicon glyphicon-user' style='margin: 0 5px 0 0'></span>" +
+                            c.Name + " " + " (" + c.Age + ")" +
+                            '<span class="glyphicon glyphicon-remove-circle" data-click="deleteContact"></span>' +
+                        "</li>";
+            });
+            $("#contacts").append(html.join(''));
+        }
+
+        function refreshEmailHistory() {
+            $.getJSON("/emails", function (emails) {
+                if (emails.length > 0) {
+                    $("#email-history").show().find("TABLE tbody").html(
+                        emails.map(function(email) {
+                            return "<tr>" +
+                                "<td>" + email.Id + "</td>" +
+                                "<td>" + email.To + "</td>" +
+                                "<td>" + email.Subject + "</td>" +
+                            "</tr>";
+                        }));
+                }});
+        }
+
+        $("#form-addcontact").bindForm({
+            success: function (contact) {
+                addContacts([contact]);
+                $("#form-addcontact input").val('')
+                    .first().focus();
+            }
+        });
+
+        $("#form-emailcontact").bindForm({
+            success: function (request) {
+                $("#form-emailcontact .form-control").val('')
+                .parents("form").find('.alert-success')
+                    .html('Email was sent to ' + (request.Email || "MQ"))
+                    .show();
+                
+                refreshEmailHistory();
+            }
+        });
+
+        $(document).bindHandlers({
+            showContact: function() {
+                var id = $(this).data("id");
+                $.getJSON("/contacts/" + id, function (contact) {
+                    $("#email-contact")
+                        .applyValues(contact)
+                        .show();
+                    $("#form-emailcontact .alert-success").hide();
+                });
+            },
+            deleteContact: function () {
+                var $li = $(this).closest("li");
+                $.post("/contacts/" + $li.data("id") + "/delete", function () {
+                    $li.remove();
+                });
+            },
+            toggleAction: function() {
+                var $form = $(this).closest("form"), action = $form.attr("action");
+                $form.attr("action", $form.data("action-alt"))
+                     .data("action-alt", action);
+            }
+        });
+    </script>
+</html>

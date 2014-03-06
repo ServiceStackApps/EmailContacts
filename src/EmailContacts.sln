@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailContacts", "EmailContacts\EmailContacts.csproj", "{5DA58A66-3FB8-4E0E-9295-50894033A1F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailContacts.ServiceModel", "EmailContacts.ServiceModel\EmailContacts.ServiceModel.csproj", "{A8ABEF09-2ADA-43FF-A173-599BE76FB3DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailContacts.ServiceInterface", "EmailContacts.ServiceInterface\EmailContacts.ServiceInterface.csproj", "{9C10B67D-D4B6-4DF9-A6C1-4C5A4645566F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailContacts.Tests", "EmailContacts.Tests\EmailContacts.Tests.csproj", "{4300E2A2-1F83-49C2-9965-B32EC504B750}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5DA58A66-3FB8-4E0E-9295-50894033A1F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DA58A66-3FB8-4E0E-9295-50894033A1F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DA58A66-3FB8-4E0E-9295-50894033A1F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DA58A66-3FB8-4E0E-9295-50894033A1F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8ABEF09-2ADA-43FF-A173-599BE76FB3DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8ABEF09-2ADA-43FF-A173-599BE76FB3DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8ABEF09-2ADA-43FF-A173-599BE76FB3DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8ABEF09-2ADA-43FF-A173-599BE76FB3DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C10B67D-D4B6-4DF9-A6C1-4C5A4645566F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C10B67D-D4B6-4DF9-A6C1-4C5A4645566F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C10B67D-D4B6-4DF9-A6C1-4C5A4645566F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C10B67D-D4B6-4DF9-A6C1-4C5A4645566F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4300E2A2-1F83-49C2-9965-B32EC504B750}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4300E2A2-1F83-49C2-9965-B32EC504B750}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4300E2A2-1F83-49C2-9965-B32EC504B750}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4300E2A2-1F83-49C2-9965-B32EC504B750}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
