@@ -837,7 +837,7 @@ If you tried sending the request via HTTP when the Server is offline you'll expe
 
 ```csharp
 var client = new JsonServiceClient(baseUri);
-client.Post(new EmailContact { ContactId = 1, Subject = "UnitTest HTTP Email #1", Body = "Body 1" }); //throws
+client.Post(new EmailContact { ContactId = 1, Subject = "HTTP Email #1", Body = "Body 1" }); //throws
 ```
 
 ### Deferred Execution and Instant Response Times
