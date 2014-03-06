@@ -15,17 +15,17 @@ This documentation goes through setting up this solution from scratch, and expla
 
 ## Table of Contents
 
-  - Creating EmailContacts Solution from Scratch
+  - [Creating EmailContacts Solution from Scratch](https://github.com/ServiceStack/EmailContacts#creating-emailcontacts-solution-from-scratch)
     - Add ServiceStack II7+ handler mapping
     - Install NuGet Packages
-  - The AppHost
+  - [The AppHost](https://github.com/ServiceStack/EmailContacts#the-apphost)
     - Plugins
     - OrmLite
     - Accessing AppSettings
     - Registering Dependencies
     - Profiling
       - SQL Profiling
-  - HTML Features
+  - [HTML Features](https://github.com/ServiceStack/EmailContacts#html-features)
     - Razor Pages
     - Accessing data in views
       - Accessing Db Directly
@@ -33,26 +33,26 @@ This documentation goes through setting up this solution from scratch, and expla
       - Embedded JSON
       - Loaded via Ajax
       - View Model
-  - API-first development
+  - [API-first development](https://github.com/ServiceStack/EmailContacts#api-first-development)
     - ServiceStack JavaScript Utils - /js/ss-utils.js
     - Bootstrap Forms
       - Binding HTML Forms
       - Fluent Validation
-  - Declarative Events
-  - Data Binding
-  - Advanced bindForm usages
-    - Form Loading
-    - Server initiated actions
-  - Message Queues
+    - Declarative Events
+    - Data Binding
+    - Advanced bindForm usages
+      - Form Loading
+      - Server initiated actions
+  - [Message queues](https://github.com/ServiceStack/EmailContacts#message-queues)
     - Benefits of Message Queues
     - Using an MQ for sending Emails
     - Rabbit MQ
     - Configuring an MQ Server in ServiceStack
     - Reliable and Durable Messaging
     - Deferred Execution and Instant Response Times
-  - Integration Tests
-  - Unit Tests
-  - Further Reading
+  - [Integration Tests](https://github.com/ServiceStack/EmailContacts#integration-tests)
+  - [Unit Tests](https://github.com/ServiceStack/EmailContacts#unit-tests)
+  - [Further Reading](https://github.com/ServiceStack/EmailContacts#further-reading)
 
 ## Creating EmailContacts Solution from Scratch
 
@@ -1063,8 +1063,8 @@ public class UnitTests
 
 ## Further Reading
 
-  - For more tutorials see a number of other [getting started tutorials and walkthroughs from the ServiceStack community](https://github.com/ServiceStack/ServiceStack/wiki/Create-your-first-webservice#wiki-community-resources)
-  - For more example projects see the [Definitive list of Example Projects, Use-Cases, Demos, Starter Templates](http://stackoverflow.com/a/15869816)
+  - For more tutorials see the [getting started tutorials and walkthroughs from the ServiceStack community](https://github.com/ServiceStack/ServiceStack/wiki/Create-your-first-webservice#wiki-community-resources)
+  - For more example projects see the [Definitive list of Examples, Use-Cases, Demos, Starter Templates](http://stackoverflow.com/a/15869816)
   - For available courses on ServiceStack see [the ServiceStack courses on Plural Sight](http://pluralsight.com/training/Courses/Find?highlight=true&searchTerm=servicestack)
  
 
