@@ -80,7 +80,7 @@
             <ul>
                 <li>Razor Pages</li>
                 <li>
-                    Acessing data in views
+                    Accessing data in views
                     <ul>
                         <li>Accessing Db Directly</li>
                         <li>Accessing Services and Dependencies</li>
@@ -409,31 +409,35 @@ container.Register(appSettings.Get("SmtpConfig",
         deserialize it into a <b>SmtpConfig</b> class using the 
         <a href="https://github.com/ServiceStack/ServiceStack.Text/wiki/JSV-Format">JSV Format</a>,
         otherwise it will use the default inline <b>SmtpConfig</b> provided.
-        The statement above also registers the SmtpConfig class in the IOC so that will be injected
-        into any dependency or service that has a <b>SmtpConfig</b> public property or 
+        The registration above also registers an instance of SmtpConfig in the IOC so that will be injected
+        into any dependency or service that has a SmtpConfig Type <b>public property</b> or 
         constructor argument.
     </p>
     
     <p>
-        Instead of using complex nested XML and configuration classes for maintaining configuration, 
-        AppSettings and the JSV Format lets you store complex type configuration in-line in an appSetting value:
+        Instead of using complex nested XML and configuration classes for maintaining structured configuration, 
+        the <b>AppSettings</b> class and JSV Format lets you dehydrate complex type configuration into clean POCO's with a single in-line appSetting value:
     </p>
 
-    <pre>&lt;add key="SmtpConfig" value="{Host:smtphost,Port:587,Username:ADD_USERNAME,Password:ADD_PASSWORD}" /&gt;</pre>
+<pre>
+&lt;appSettings&gt;
+  &lt;add key="SmtpConfig" value="{Host:smtphost,Port:587,Username:ADD_USERNAME,Password:ADD_PASSWORD}" /&gt;
+&lt;/appSettings&gt;
+</pre>
 
     <a name="dependencies"></a>
     <h3>Registering Dependencies</h3>    
     
     <p>
         A common task for any non-trivial application is to register your own dependencies used by your services.
-        We've already have seen an example of how to register a dependency when we registered OrmLite, 
-        but that took a lambda which meant it took control over how it was constructed.
+        We've already seen an example of how to register a dependency when we registered OrmLite, 
+        but that took a lambda which meant it took control over the objects construction.
     </p>
     
     <p>
         <a href="https://github.com/ServiceStack/ServiceStack/wiki/The-IoC-container">ServiceStack's built-in IOC</a>
         supports a number of other API's to register your dependencies, a common one is to have the 
-        IOC also auto wire any dependencies your dependenices might have. The same API allows you to
+        IOC also auto wire any dependencies your dependencies might have. The same API allows you to
         register your concrete dependency against a different interface, i.e:
     </p>
 
@@ -444,8 +448,9 @@ container.RegisterAs&lt;SmtpEmailer, IEmailer&gt;().ReusedWithin(ReuseScope.Requ
 
     <p>
         This application has 2 substitutable implementations of <b>IEmailer</b> available. If you have
-        access to an SMTP server it can send emails using <b>SmtpEmailer</b>, otherwise
-        register <b>DbEmailer</b> instead to simulate sending emails by storing them in a database.
+        access to an SMTP server it can send emails using <b>SmtpEmailer</b>, otherwise register 
+        <b>DbEmailer</b> instead to simulate sending emails with a 1 second delay and track a history 
+        of them in a database.
     </p>
 
     <a name="profiling"></a>
@@ -501,7 +506,7 @@ protected void Application_EndRequest(object src, EventArgs e)
     <img src="http://mono.servicestack.net/files/miniprofiler-simpledb-n1.png" alt="Simple N+1 DB Example"/>
     
     <p>
-        Clicking on the link will open a new dialog to view the SQL queries that were peformed for that request:
+        Clicking on the link will open a new dialog to view the SQL queries that were performed for that request:
     </p>
 
     <img src="http://mono.servicestack.net/files/miniprofiler-simpledb-n1-sql.png" width="500" alt="SQL Viewer"/>
@@ -514,7 +519,7 @@ protected void Application_EndRequest(object src, EventArgs e)
     <p>
         In addition to providing a solid Services Framework, ServiceStack also serves as a full-featured
         Web Framework great for powering dynamic websites and javascript-powered Single Page Apps. 
-        With no other depdencies, it can create content-heavy and simple dynamic sites like the 
+        With no other dependencies, it can create content-heavy and simple dynamic sites like the 
         <a href="http://mono.servicestack.net/docs/">ServiceStack Docs</a> website
         using just the built-in
         <a href="http://mono.servicestack.net/docs/markdown/markdown-razor">Markdown Razor view engine</a>        
@@ -542,7 +547,7 @@ protected void Application_EndRequest(object src, EventArgs e)
 </pre>
     
     <p>
-        Now you're ready to start creating Razor pages which are just HTML pages with a <b>.cshtml</b> extension.
+        Now you're ready to start creating Razor pages which are just plain-text HTML pages with a <b>.cshtml</b> extension.
     </p>
     
     <h4>The No Ceremony option - Dynamic pages without Controllers</h4>
@@ -561,7 +566,7 @@ protected void Application_EndRequest(object src, EventArgs e)
         <li><b>Request ViewModel</b> - When executed directly, the Views <b>Model</b> is a dynamic object that looks at HTTP Headers, QueryString, FormData, etc</li>
     </ul>
     
-    <h3>Acessing data in views</h3>
+    <h3>Accessing data in views</h3>
     
     <p>
         As Razor Pages provide full access to framework features, it enables a few different
@@ -634,8 +639,8 @@ function contactsHtml(contacts) {
 </pre>    
 
     <p>
-        In this example <b>AsRawJson()</b> converts the C# into a JSON Array which is automatically
-        inferred as a native JavaScript array when loaded by the browser that is passed to the 
+        In this example <b>AsRawJson()</b> converts the C# collection into a JSON Array which is automatically
+        inferred as a native JavaScript array when loaded by the browser. It's then passed to the 
         <b>contactsHtml(contacts)</b> JavaScript function that converts it into a HTML string that is 
         injected into the <b>#embedded-json</b> UL HTML element using jQuery's <b>$.append()</b> method.
     </p>
@@ -657,7 +662,7 @@ function addContacts(contacts) {
 </pre>
 
     <p>
-        Generating HTML via Ajax is effectively the same via Embedded JSON in which we're able to 
+        Generating HTML via Ajax is effectively the same as <b>Embedded JSON</b> in which we're able to 
         re-use the <b>contractsHtml()</b> method to generate the HTML, the only difference is the 
         JSON is a result of an <b>$.getJSON()</b> ajax call instead of calling the method directly. 
     </p>
@@ -681,11 +686,13 @@ function addContacts(contacts) {
 </pre>    
     
     <p>
-        This is the entire contents of the <b>/Views/GetContact.cshtml</b> page which can be viewed
-        at <a href="/contacts/1">/contacts/1</a>. Pages that renders the response of a Service are 
-        called <b>View Pages</b> and are maintained anywhere (i.e. any nested folder structure) 
-        in the <b>/Views</b> directory. 
-        The most appropriate View Page that gets selected is baseed on the following order of precedence:
+        This is the entire contents of the 
+        <a href="https://github.com/ServiceStack/EmailContacts/blob/master/src/EmailContacts/Views/GetContact.cshtml">/Views/GetContact.cshtml</a> 
+        page which can be viewed
+        at <a href="/contacts/1">/contacts/1</a>. 
+        Pages that renders the response of a Service are called <b>View Pages</b> and are maintained 
+        anywhere (i.e. any nested folder structure) in the <b>/Views</b> directory. 
+        The most appropriate View Page that gets selected is based on the following order of precedence:
     </p>
     
     <ol>
@@ -726,7 +733,7 @@ public class MyService : Service { ... }
 </pre>
     
     <p>
-        Which will enable the client to change the View or Template used by sepcifying it on the QueryString,
+        Which will enable the client to change the View or Template used by specifying it on the QueryString,
         e.g: <b>/contact/1?View={View}</b>. This is useful in scenarios when you want to view pages 
         in multiple page layouts, e.g. Print Previews or Mobile optimized pages.
     </p>
@@ -746,8 +753,8 @@ public class MyService : Service { ... }
         For web development this means that UI logic and Error handling should ideally be done on the 
         client with JavaScript rather than behind server-side pages which gets easily coupled to your 
         server implementation rather than your external published APIs. Whilst this may be perceived as a
-        restraiction we've found using JavaScript ends up being a productivity and responsiveness win 
-        which is more flexible and better suited than C# in genericizing re-usable functionality, 
+        restriction we've found using JavaScript ends up being a productivity and responsiveness win 
+        which is more flexible and better suited than C# in genericizing reusable functionality, 
         reducing boilerplate, string manipulation, generating HTML views, consuming ajax services, 
         event handling, DOM binding and manipulation, etc 
     </p>
@@ -765,13 +772,13 @@ public class MyService : Service { ... }
 </pre>
     
     <p>
-        To showcase how it can simplify general web development we'll
-        walkthrough the JavaScript needed to provide the behavior for the multiple-forms 
-        <a href="/contacts">/contacts</a> page which is captured in the 70 lines of JavaScript below 
-        using nothing other than jQuery and bootstrap.js:
+        To showcase how it can simplify general web development, 
+        we'll walkthrough the JavaScript needed to provide the all behavior for the multiple-forms 
+        <a href="/">home page</a> which is captured in the 70 lines of JavaScript below using 
+        nothing other than jQuery and bootstrap.js:
     </p>
     
-    <pre>
+<pre>
 &lt;script&gt;
     $("input").change($.ss.clearAdjacentError);
     $.getJSON("/contacts", addContacts);
@@ -871,7 +878,7 @@ public class MyService : Service { ... }
 </pre>
     
     <p>
-        The first interesting thing is the action url provides a typed url populated by the <b>ToPostUrl()</b> 
+        The first interesting thing is the action url is created with a typed API populated by the <b>ToPostUrl()</b> 
         extension method that looks at <b>CreateContact</b> Request DTO to return the best matching route
         based on the Route definitions and the fields populated in the Request DTO instance, in this case
         the empty Request DTO matches <b>[Route("/contacts", "POST")]</b> so returns <b>/contacts</b>. 
@@ -903,8 +910,8 @@ $("#form-addcontact").bindForm({
     
     <p>
         This takes over the handling of this FORM and instead of doing a POST back of the entire page 
-        makes an Ajax request using all the fields in the FORM to POST the data to the <b>CreateContact</b> 
-        Service: 
+        to the server, it makes an Ajax request using all the fields in the FORM to POST the data to 
+        the <b>CreateContact</b> Service: 
     </p>
     
 <pre>
@@ -925,7 +932,7 @@ public Contact Post(CreateContact request)
     
     <h4>Fluent Validation</h4>
     <p>
-        Normally the implementation will be called as-is but because we've added the FluentValidation 
+        Normally the Service implementation will be called as-is but because we've added the FluentValidation 
         <b>ValidationFeature</b> plugin and a validator exists for <b>CreateContact</b>:
     </p>    
 
@@ -959,7 +966,7 @@ $("input").change($.ss.clearAdjacentError);
 </pre>
 
     <p>
-        Once all is sucessfull we invoke the <b>success:</b> callback with the response of the Service
+        Once all is sucessful we invoke the <b>success:</b> callback with the response of the Service
         which in this case is the newly created Contact which we dynamically add to the contacts list by 
         calling the existing <b>addContacts()</b> method. We also clear all form values and put focus back
         to the first field, ready for a rapid entry of the next Contact:
@@ -997,7 +1004,7 @@ function addContacts(contacts) {
 </pre>
 
     <p>
-        This show cases some of the declartive event support in ss-utils which allows you to invoke
+        This show cases some of the declarative event support in ss-utils which allows you to invoke
         event handlers without needing to maintain bookkeeping of event handlers when adding or removing elements.
         You can instead define one set of event handlers for the entire page with <b>bindHandlers</b>, e.g:
     </p>
@@ -1061,7 +1068,7 @@ showContact: function() {
     </p>
     
     <ul>
-        <li>Set the <b>value</b> of all elements with matching <b>id=field</b> or <b>name=field</b></li>
+        <li>Set the <b>value</b> of all elements with matching <b>id={field}</b> or <b>name={field}</b></li>
         <li>Set the <b>value</b> of all elements marked with <b>data-val</b></li>
         <li>Set the innerHTML contents of all elements marked with <b>data-html</b></li>
     </ul>
@@ -1176,7 +1183,7 @@ return HttpResult.TriggerEvent(contact, eventName:"showLoginPopup");
     <p>
         ServiceStack includes support for a number of MQ options which as they all implement ServiceStack's 
         <a href="https://github.com/ServiceStack/ServiceStack/wiki/Messaging#wiki-messaging-api">Messaging API</a>
-        they're easily interchangable. 
+        they're easily interchangeable. 
     </p>
     
     <h3>Rabbit MQ</h3>
@@ -1385,7 +1392,7 @@ public class IntegrationTests
         "GetContact: ".Print();
         contact.PrintDump();
 
-        List&lt;Contact&lt; response = client.Get(new FindContacts { Age = 27 });
+        List&lt;Contact&gt; response = client.Get(new FindContacts { Age = 27 });
 
         "FindContacts: ".Print();
         response.PrintDump();
@@ -1395,7 +1402,7 @@ public class IntegrationTests
     [Test]
     public async Task Can_call_with_JsonServiceClient_Async()
     {
-        List&lt;Contact&lt; response = await client.GetAsync(new FindContacts { Age = 27 });
+        List&lt;Contact&gt; response = await client.GetAsync(new FindContacts { Age = 27 });
         response.PrintDump();
     }
 
