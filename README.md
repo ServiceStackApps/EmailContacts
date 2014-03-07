@@ -345,7 +345,7 @@ A productive option all web frameworks should have is being able to execute dyna
 
 ### Accessing data in views
 
-As Razor Pages provide full access to framework features, it enables a few different ways to accesss data from within your pages, shown in info.cshtml:
+As Razor Pages provide full access to framework features, it enables a few different ways to accesss data from within your pages, shown in [info.cshtml](https://github.com/ServiceStack/EmailContacts/blob/master/src/EmailContacts/info.cshtml):
 
 #### Accessing Db Directly
 
@@ -421,11 +421,11 @@ Generating HTML via Ajax is effectively the same as **Embedded JSON** in which w
 A more traditional approach to access data from within a Razor page that is familiar to MVC developers is to have it passed in as the ViewModel into the page. In ServiceStack, you don't need a separate Controller because your existing Services also serve as the Controller and its response is used as the ViewModel, in which case the syntax is exactly the same as it is in ASP.NET MVC, i.e:
 
 ```html
-@model Contact
+﻿@model Contact
 
 <h3>View Model</h3>
 <ul>
-    <li>@contact.Name @contact.Email (@contact.Age)</li>
+    <li>@Model.Name @Model.Email (@Model.Age)</li>
 </ul>
 ```
 
@@ -470,7 +470,7 @@ This is useful in scenarios when you want to view pages in multiple page layouts
 
 A strategy we recommend for maximizing re-use of your Services is to design them from an API-first point of view where all consumers (e.g. Desktop, Mobile and Web UIs) have equal accessibility to your services since they all consume the same published API's for all of their functionality.
 
-For web development this means that UI logic and Error handling should ideally be done on the client with JavaScript rather than behind server-side pages which gets easily coupled to your server implementation rather than your external published APIs. Whilst this may be perceived as a restriction we've found using JavaScript ends up being a productivity and responsiveness win which is more flexible and better suited than C# in genericizing reusable functionality, reducing boilerplate, string manipulation, generating HTML views, consuming ajax services, event handling, DOM binding and manipulation, etc
+For web development this means that UI logic and Error handling should ideally be done on the client with JavaScript rather than behind server-side pages which gets easily coupled to your server implementation rather than your external published APIs. Whilst this may be perceived as a restriction we've found using JavaScript ends up being a productivity and responsiveness win which is more flexible and better suited than C# in genericizing reusable functionality, reducing boilerplate, string manipulation, generating HTML views, consuming ajax services, event handling, DOM binding and manipulation and other common web dev tasks.
 
 ### ServiceStack JavaScript Utils - /js/ss-utils.js
 
