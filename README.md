@@ -90,6 +90,7 @@ For **EmailContacts** Host Project:
     PM> Install-Package ServiceStack.Razor
     PM> Install-Package ServiceStack.Swagger
     PM> Install-Package ServiceStack.RabbitMq
+    PM> Install-Package ServiceStack.OrmLite.Sqlite.Mono
 
 For **EmailContacts.ServiceInterface** project:
 
@@ -379,7 +380,7 @@ Rather than querying the DB directly another option is to query Services or Repo
 </ul>
 ```
 
-This works because Services are themselves just registered dependencies that you can resolve from the IOC and execute as is. The one caveat is if your services makes use of the HTTP Request object it will need to be either injected manually or instead of Get<T> call `ResolveService<T>` to do it.
+This works because Services are themselves just registered dependencies that you can resolve from the IOC and execute as-is. The one caveat is if your services makes use of the HTTP Request object it will need to be either injected manually or instead of `Get<T>`, call `ResolveService<T>` which does it.
 
 #### Embedded JSON
 
@@ -400,7 +401,7 @@ function contactsHtml(contacts) {
 </script>
 ```
 
-In this example `AsRawJson()` converts the C# collection into a JSON Array which is automatically inferred as a native JavaScript array when loaded by the browser. It's then passed to the `contactsHtml(contacts)` JavaScript function that converts it into a HTML string that is injected into the **#embedded-json** UL HTML element using jQuery's `$.append()` method.
+In this example `AsRawJson()` converts the C# collection into a JSON Array which is automatically inferred as a native JavaScript array when loaded by the browser. It's then passed to the `contactsHtml(contacts)` JavaScript function that converts it into a HTML string that's injected into the **#embedded-json** UL HTML element using jQuery's `$.append()`.
 
 #### Loaded via Ajax
 
@@ -414,11 +415,11 @@ function addContacts(contacts) {
 }
 ```
 
-Generating HTML via Ajax is effectively the same as **Embedded JSON** in which we're able to re-use the `contractsHtml()` method to generate the HTML, the only difference is the JSON is a result of an `$.getJSON()` ajax call instead of calling the method directly.
+Generating HTML via Ajax is effectively the same as **Embedded JSON** in which we're able to re-use the `contactsHtml()` method to generate the HTML, the only difference is the JSON is a result of an `$.getJSON()` ajax call instead of calling the method directly.
 
 #### View Model
 
-A more traditional approach to access data from within a Razor page that is familiar to MVC developers is to have it passed in as the ViewModel into the page. In ServiceStack, you don't need a separate Controller because your existing Services also serve as the Controller and its response is used as the ViewModel, in which case the syntax is exactly the same as it is in ASP.NET MVC, i.e:
+A more traditional approach to access data from within a Razor page that is familiar to MVC developers is to have it passed in as the ViewModel into the page. In ServiceStack, you don't need a separate Controller because your existing Services also serves as the Controller for views where its response is used as the ViewModel, in which case the syntax is exactly the same as it is in ASP.NET MVC, i.e:
 
 ```html
 ﻿@model Contact
@@ -436,7 +437,7 @@ The most appropriate **View Page** that gets selected is based on the following 
   - The same name as the Request DTO - e.g. **GetContact.cshtml**
   - The same name as the Resposne DTO - e.g. **Contact.cshtml**
 
-The Selected View (and Template) can also be changed at runtime by returning a decorated response and setting the View in a HttpResult:
+The Selected View (and Template) can also be changed at runtime by returning a decorated response and setting the View in a `HttpResult`:
 
 ```csharp
 return new HttpResult(dto) {
@@ -470,7 +471,7 @@ This is useful in scenarios when you want to view pages in multiple page layouts
 
 A strategy we recommend for maximizing re-use of your Services is to design them from an API-first point of view where all consumers (e.g. Desktop, Mobile and Web UIs) have equal accessibility to your services since they all consume the same published API's for all of their functionality.
 
-For web development this means that UI logic and Error handling should ideally be done on the client with JavaScript rather than behind server-side pages which gets easily coupled to your server implementation rather than your external published APIs. Whilst this may be perceived as a restriction we've found using JavaScript ends up being a productivity and responsiveness win which is more flexible and better suited than C# in genericizing reusable functionality, reducing boilerplate, string manipulation, generating HTML views, consuming ajax services, event handling, DOM binding and manipulation and other common web dev tasks.
+For web development this means that UI logic and Error handling should ideally be done on the client with JavaScript rather than behind server-side pages which gets easily coupled to your server implementation rather than your external published APIs. Whilst this may be perceived as a restriction we've found using JavaScript ends up being a productivity and responsiveness win which is more flexible and better suited than C# in genericizing reusable functionality, reducing boilerplate, string manipulation, generating HTML views, consuming ajax services, event handling, DOM binding and manipulation and other common web programming tasks.
 
 ### ServiceStack JavaScript Utils - /js/ss-utils.js
 
@@ -480,7 +481,7 @@ Embedded inside **ServiceStack.dll** is a JavaScript utility library that offers
 <script type="text/javascript" src="/js/ss-utils.js"></script>
 ```
 
-To showcase how it can simplify general web development, we'll walkthrough the JavaScript needed to provide the all behavior for the multiple-forms [home page](/) which is captured in the 70 lines of JavaScript below using nothing other than jQuery and bootstrap.js:
+To showcase how it can simplify general web development, we'll walkthrough the JavaScript needed to provide all the behavior for the [entire UI](https://github.com/ServiceStack/EmailContacts/blob/master/src/EmailContacts/default.cshtml), captured in the 70 lines of JavaScript below using nothing other than jQuery and bootstrap.js:
 
 ```js
 $("input").change($.ss.clearAdjacentError);
@@ -593,7 +594,7 @@ $("#form-addcontact").bindForm({
 });
 ```
 
-This takes over the handling of this FORM and instead of doing a POST back of the entire page to the server, it makes an Ajax request using all the fields in the FORM to POST the data to the **CreateContact** Service:
+This takes over the handling of this FORM and instead of doing a POST back of the entire page to the server, makes an Ajax request using all the fields in the FORM to POST the data to the **CreateContact** Service:
 
 ```csharp
 public Contact Post(CreateContact request)
@@ -608,7 +609,7 @@ As seen from the implementation, the above service uses ServiceStack's built-in 
 
 #### Fluent Validation
 
-Normally the Service implementation will be called as-is but because we've added the FluentValidation `ValidationFeature` plugin and a validator exists for `CreateContact` below:
+Normally the Service implementation will be called as-is but as we've added the FluentValidation `ValidationFeature` plugin and there exists a validator for `CreateContact` below:
 
 ```csharp
 public class CotntactsValidator : AbstractValidator<CreateContact>
@@ -791,7 +792,7 @@ More details of these and other advantages can be found in the definitive [Enter
 
 Sending emails is a common task that's particularly well suited for Message Queues where SMTP Servers often have resource limits and quotas that can often fail when trying to process a high volume of emails at once. Instead of building a bespoke queuing solution just for processing system emails, you can easily take advantage of purpose-built MQ Brokers to get the desired functionality for free.
 
-ServiceStack includes support for a number of MQ options which as they all implement ServiceStack's [Messaging API](https://github.com/ServiceStack/ServiceStack/wiki/Messaging#wiki-messaging-api) they're easily interchangeable.
+ServiceStack includes support for a number of MQ options which as they all implement ServiceStack's [Messaging API](https://github.com/ServiceStack/ServiceStack/wiki/Messaging#wiki-messaging-api), are easily interchangeable.
 
 ### Rabbit MQ
 
@@ -801,7 +802,7 @@ Before we can use it, we need to install it first, which can be done by followin
 
 ### Configuring an MQ Server in ServiceStack
 
-Once the Rabbit MQ broker is started we can start using it. Configuring an MQ Server is done the same way in ServiceStack, e.g:
+Once the Rabbit MQ broker is started we can start using it. Configuring an MQ Server in ServiceStack are all done in the same way, e.g:
 
 ```csharp
 container.Register<IMessageService>(c => new RabbitMqServer());
@@ -988,7 +989,7 @@ public class IntegrationTests
 
 Remember to use a `async Task` return type when testing Async APIs that use `await` on the async Task responses.
 
-The `T.PrintDump()` extension method writes out a recursive, pretty-formatted dump of all the response DTO's properties which we find to be extremely useful and time saving for introspecting the responses of live services.
+The `T.PrintDump()` extension method writes out a recursive, pretty-formatted dump of all the response DTO's properties which we find to be an invaluable time-saver for introspecting responses of live services.
 
 ## Unit Tests
 
