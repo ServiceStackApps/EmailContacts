@@ -717,6 +717,24 @@ The databinding applied by `applyValues()` include:
   - Set the **value** of all elements marked with **data-val={field}**
   - Set the innerHTML contents of all elements marked with **data-html={field}**
 
+`$("#email-contact").applyValues(contact)` binds the returned **contact** response to the **#email-contact** section, populating all matching elements with data from contact:
+
+```html
+<div id="email-contact">
+    ...
+    <h3>
+        Email <span data-html="Name"></span>
+    </h3>
+    <h4>To: <span data-html="Email"></span></h4>
+    <div class="clearfix"></div>
+    <form id="form-emailcontact" method="POST">
+        ...
+        <input type="hidden" name="ContactId" data-val="Id"  />
+        ...
+    </form>
+</div>
+```
+
 ## Advanced bindForm usages
 
 ### Form Loading
