@@ -1,4 +1,3 @@
-
 # Email Contact Services
 
 Is a ServiceStack Single Page App built just using jQuery and Bootstrap to provide an example showing how to structure a medium-sized ServiceStack solution as well as showcasing some of ServiceStack's built-in features useful in the reducing the effort for developing medium-sized Web Applications.
@@ -715,8 +714,8 @@ showContact: function() {
 The databinding applied by `applyValues()` include:
 
   - Set the **value** of all elements with matching **id={field}** or **name={field}**
-  - Set the **value** of all elements marked with **data-val**
-  - Set the innerHTML contents of all elements marked with **data-html**
+  - Set the **value** of all elements marked with **data-val={field}**
+  - Set the innerHTML contents of all elements marked with **data-html={field}**
 
 ## Advanced bindForm usages
 
