@@ -1,10 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
-<!--
-  For more information on how to configure your ASP.NET application, please visit
-  http://go.microsoft.com/fwlink/?LinkId=169433
-  -->
-
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <configuration>
   <configSections>
     <sectionGroup name="system.web.webPages.razor" type="System.Web.WebPages.Razor.Configuration.RazorWebSectionGroup, System.Web.WebPages.Razor">
@@ -12,20 +6,11 @@
       <section name="pages" type="System.Web.WebPages.Razor.Configuration.RazorPagesSection, System.Web.WebPages.Razor" requirePermission="false" />
     </sectionGroup>
   </configSections>
-
   <appSettings>
     <add key="webPages:Enabled" value="false" />
   </appSettings>
-
-  <system.webServer>
-    <validation validateIntegratedModeConfiguration="false" />
-    <handlers>
-      <add path="*" name="ServiceStack.Factory" type="ServiceStack.HttpHandlerFactory, ServiceStack" verb="*" preCondition="integratedMode" resourceType="Unspecified" allowPathInfo="true" />
-    </handlers>
-  </system.webServer>
-
   <system.web>
-    <compilation targetFramework="4.5" debug="true">
+    <compilation debug="true">
       <assemblies>
         <add assembly="System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
       </assemblies>
@@ -33,13 +18,9 @@
         <add extension=".cshtml" type="ServiceStack.Razor.CSharpRazorBuildProvider, ServiceStack.Razor" />
       </buildProviders>
     </compilation>
-    <httpRuntime targetFramework="4.5" />
-    <httpHandlers>
-      <add path="*" type="ServiceStack.HttpHandlerFactory, ServiceStack" verb="*" /><!-- IIS6 mapping required for Mono -->
-    </httpHandlers>
   </system.web>
-
   <system.web.webPages.razor>
+    <host factoryType="System.Web.Mvc.MvcWebRazorHostFactory, System.Web.Mvc" />
     <pages pageBaseType="ServiceStack.Razor.ViewPage">
       <namespaces>
         <add namespace="ServiceStack" />
@@ -47,12 +28,8 @@
         <add namespace="ServiceStack.Razor" />
         <add namespace="ServiceStack.Text" />
         <add namespace="ServiceStack.OrmLite" />
-        <add namespace="EmailContacts" />
-        <add namespace="EmailContacts.ServiceModel" />
-        <add namespace="EmailContacts.ServiceModel.Types" />
+        <add namespace="$rootnamespace$" />
       </namespaces>
     </pages>
-    <host factoryType="System.Web.Mvc.MvcWebRazorHostFactory, System.Web.Mvc" />
   </system.web.webPages.razor>
-
 </configuration>
