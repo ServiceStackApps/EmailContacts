@@ -87,8 +87,8 @@ For **EmailContacts** Host Project:
     PM> Install-Package jQuery
     PM> Install-Package bootstrap
     PM> Install-Package ServiceStack.Razor
-    PM> Install-Package ServiceStack.Swagger
     PM> Install-Package ServiceStack.RabbitMq
+    PM> Install-Package ServiceStack.Api.Swagger
     PM> Install-Package ServiceStack.OrmLite.Sqlite.Mono
 
 For **EmailContacts.ServiceInterface** project:
