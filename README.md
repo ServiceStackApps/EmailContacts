@@ -91,6 +91,10 @@ For **EmailContacts** Host Project:
     PM> Install-Package ServiceStack.Api.Swagger
     PM> Install-Package ServiceStack.OrmLite.Sqlite.Mono
 
+If on Mono OSX/Linux you also need:
+
+    PM> Install-Package Microsoft.AspNet.WebPages
+
 For **EmailContacts.ServiceInterface** project:
 
     PM> Install-Package ServiceStack
