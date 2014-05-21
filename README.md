@@ -256,7 +256,7 @@ Instead of using complex nested XML and configuration classes for maintaining st
 ```xml
 <appSettings>
   <add key="SmtpConfig" value="{Host:smtphost,Port:587,Username:ADD_USER,Password:ADD_PASS}" />
-</appSettigns>
+</appSettings>
 ```
 
 ### Registering Dependencies
