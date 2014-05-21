@@ -256,7 +256,7 @@ Instead of using complex nested XML and configuration classes for maintaining st
 ```xml
 <appSettings>
   <add key="SmtpConfig" value="{Host:smtphost,Port:587,Username:ADD_USER,Password:ADD_PASS}" />
-</appSettigns>
+</appSettings>
 ```
 
 ### Registering Dependencies
@@ -615,9 +615,9 @@ As seen from the implementation, the above service uses ServiceStack's built-in 
 Normally the Service implementation will be called as-is but as we've added the FluentValidation `ValidationFeature` plugin and there exists a validator for `CreateContact` below:
 
 ```csharp
-public class CotntactsValidator : AbstractValidator<CreateContact>
+public class ContactsValidator : AbstractValidator<CreateContact>
 {
-    public CotntactsValidator()
+    public ContactsValidator()
     {
         RuleFor(x => x.Name).NotEmpty().WithMessage("A Name is what's needed.");
         RuleFor(x => x.Email).NotEmpty().EmailAddress();
