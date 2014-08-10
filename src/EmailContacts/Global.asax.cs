@@ -20,7 +20,7 @@ namespace EmailContacts
 {
     public class AppHost : AppHostBase
     {
-        public AppHost() : base("Email Contact Services", typeof(ContactsServices).Assembly) {}
+        public AppHost() : base("Email Contact Services", typeof(ContactsServices).Assembly, typeof(QueryEmails).Assembly) {}
 
         public override void Configure(Container container)
         {
@@ -33,6 +33,8 @@ namespace EmailContacts
 
             Plugins.Add(new ValidationFeature());
             container.RegisterValidators(typeof(ContactsServices).Assembly);
+
+            Plugins.Add(new AutoQueryFeature());
 
             container.Register<IDbConnectionFactory>(
                 c => new OrmLiteConnectionFactory("db.sqlite", SqliteDialect.Provider) {
