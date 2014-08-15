@@ -44,4 +44,7 @@ namespace EmailContacts.ServiceModel
     {
         public int Id { get; set; }
     }
+
+    [Route("/reset")]
+    public class Reset {}
 }

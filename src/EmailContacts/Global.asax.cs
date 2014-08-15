@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Linq;
 using EmailContacts.ServiceInterface;
 using EmailContacts.ServiceModel;
@@ -37,7 +38,7 @@ namespace EmailContacts
             Plugins.Add(new AutoQueryFeature());
 
             container.Register<IDbConnectionFactory>(
-                c => new OrmLiteConnectionFactory("db.sqlite", SqliteDialect.Provider) {
+                c => new OrmLiteConnectionFactory("~/db.sqlite".MapHostAbsolutePath(), SqliteDialect.Provider) {
                     ConnectionFilter = x => new ProfiledDbConnection(x, Profiler.Current)
                 });
 
@@ -45,10 +46,7 @@ namespace EmailContacts
             {
                 db.DropAndCreateTable<Email>();
                 db.DropAndCreateTable<Contact>();
-
-                db.Insert(new Contact { Name = "Kurt Cobain", Email = "demo+kurt@servicestack.net", Age = 27 });
-                db.Insert(new Contact { Name = "Jimi Hendrix", Email = "demo+jimi@servicestack.net", Age = 27 });
-                db.Insert(new Contact { Name = "Michael Jackson", Email = "demo+mike@servicestack.net", Age = 50 });
+                ContactsServices.AddCustomers(db);
             }
 
             UseDbEmailer(container);

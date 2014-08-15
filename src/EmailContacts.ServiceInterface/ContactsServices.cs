@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using EmailContacts.ServiceModel;
 using EmailContacts.ServiceModel.Types;
 using ServiceStack;
@@ -41,6 +42,20 @@ namespace EmailContacts.ServiceInterface
         public void Any(DeleteContact request)
         {
             Db.DeleteById<Contact>(request.Id);
+        }
+
+        public void Any(Reset request)
+        {
+            Db.DeleteAll<Email>();
+            Db.DeleteAll<Contact>();
+            AddCustomers(Db);
+        }
+
+        public static void AddCustomers(IDbConnection db)
+        {
+            db.Insert(new Contact { Name = "Kurt Cobain", Email = "demo+kurt@servicestack.net", Age = 27 });
+            db.Insert(new Contact { Name = "Jimi Hendrix", Email = "demo+jimi@servicestack.net", Age = 27 });
+            db.Insert(new Contact { Name = "Michael Jackson", Email = "demo+mike@servicestack.net", Age = 50 });
         }
     }
 }
