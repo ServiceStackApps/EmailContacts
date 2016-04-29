@@ -32,7 +32,7 @@ namespace EmailContacts.ServiceInterface
 
         public object Any(FindEmails request)
         {
-            var query = Db.SqlExpression<Email>()
+            var query = Db.From<Email>()
                 .OrderByDescending(q => q.Id)
                 .Limit(request.Skip.GetValueOrDefault(0), request.Take.GetValueOrDefault(10));
 

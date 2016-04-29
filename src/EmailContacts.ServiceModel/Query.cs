@@ -4,8 +4,8 @@ using ServiceStack;
 namespace EmailContacts.ServiceModel
 {
     [Route("/query/emails")]
-    public class QueryEmails : QueryBase<Email> { }
+    public class QueryEmails : QueryDb<Email> { }
 
     [Route("/query/contacts")]
-    public class QueryContacts : QueryBase<Contact> { }
+    public class QueryContacts : QueryDb<Contact> { }
 }
