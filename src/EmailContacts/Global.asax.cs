@@ -6,7 +6,7 @@ using EmailContacts.ServiceModel;
 using EmailContacts.ServiceModel.Types;
 using Funq;
 using ServiceStack;
-using ServiceStack.Api.Swagger;
+using ServiceStack.Api.OpenApi;
 using ServiceStack.Configuration;
 using ServiceStack.Data;
 using ServiceStack.Messaging;
@@ -25,10 +25,11 @@ namespace EmailContacts
 
         public override void Configure(Container container)
         {
-            Plugins.Add(new SwaggerFeature());
+            Plugins.Add(new OpenApiFeature());
             Plugins.Add(new RazorFormat());
             Plugins.Add(new RequestLogsFeature());
 
+            Plugins.Add(new MiniProfilerFeature());
             Plugins.Add(new PostmanFeature());
             Plugins.Add(new CorsFeature());
 

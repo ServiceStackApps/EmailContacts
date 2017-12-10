@@ -17,7 +17,7 @@ namespace EmailContacts.ServiceModel
     }
 
     [Route("/contacts", "POST")]
-    public class CreateContact
+    public class CreateContact : IReturnVoid
     {
         public string Name { get; set; }
         public string Email { get; set; }
